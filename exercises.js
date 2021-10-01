@@ -47,31 +47,33 @@ const findMaxnumber = (arr, prevValue = 0) => {
 console.log(findMaxnumber(arr))
 
 
-const arr = [5, 3, 2, 4, 1, 10]; 
+const arrB = [5, 3, 2, 4, 1, 10]; 
 
 // BinarySearch + D&C
-// Answer: 5
-const spliceArray = (arr) => {
+// Answer: 10
+const findMaxnumberBinarySearch = (arr) => {
   const middleIndex = Math.floor((arr.length - 1) / 2);
-  console.log(middleIndex);
-  const reducedArr = arr.splice(0, middleIndex);
+  const leftArr = arr.slice(0, middleIndex);
+  const rightArr = arr.slice(middleIndex + 1, arr.length);
   
-  return [arr[middleIndex], reducedArr];
+  let maxValue = arr[middleIndex];
+
+  const rightArrSearchFinished = rightArr.length === 0;
+
+  if (!rightArrSearchFinished) {
+    const rightMaxValue = findMaxnumberBinarySearch(rightArr);
+    if (rightMaxValue > maxValue) maxValue = rightMaxValue; 
+  }
+
+  const leftArrSearchFinished = leftArr.length === 0;
+  if (!leftArrSearchFinished) {
+    const leftMaxValue = findMaxnumberBinarySearch(leftArr);
+    if (leftMaxValue > maxValue) maxValue = leftMaxValue; 
+  }
+
+  return maxValue;
 };
 
-const findMaxnumberBinarySearch = (arr, prevValue = 0) => {
-  const sortedArr = [...arr.sort()];
-  const [testedValue, reducedArr] = spliceArray(sortedArr);
-  console.log(testedValue);
-  const isFinalCount = reducedArr.length === 0;
-  const testedIsGreater = testedValue > prevValue;
-  const maxValue = testedIsGreater
-   ? testedValue 
-   : prevValue;
 
-  if (isFinalCount) return maxValue;
 
-  return findMaxnumberBinarySearch(reducedArr, maxValue)
-}
-
-console.log(findMaxnumberBinarySearch(arr))
+console.log(findMaxnumberBinarySearch(arrB))
