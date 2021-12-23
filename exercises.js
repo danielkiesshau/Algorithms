@@ -94,3 +94,67 @@ const quickStort = (arr) => {
 }
 
 console.log(quickStort(arrC))
+
+// Graph
+// Answer: bob
+
+const graph = {
+
+}
+
+graph["you"] = ["alice", "bob", "claire"]
+graph["bob"] = ["anuj", "peggy"]
+graph["alice"] = ["peggy"]
+graph["claire"] = ["thom", "jonny"]
+graph["anuj"] = []
+graph["peggy"] = []
+graph["thom"] = []
+graph["jonny"] = []
+
+const mangoSellers = {
+  "bob": "bob", 
+  "jonny": "jonny" 
+}
+
+
+// breadh-first
+function breadthFirst(startingNode, graph) {
+  let checkedNode = null;
+  let currentNode = startingNode;
+
+  graph[startingNode].some(node => {
+    checkedNode = mangoSellers[node];
+    currentNode = node;
+
+    return checkedNode;
+  })
+
+  return checkedNode || breadthFirst(currentNode, graph);
+}
+
+console.log(breadthFirst("you", graph));
+
+
+function breadthFirstB(startingNode, graph) {  
+  let checkedNode = null;
+  let currentNode = startingNode;
+
+  const queue = [currentNode];
+
+  while (queue.length > 0) {
+    currentNode = queue.shift();
+
+    if (mangoSellers[currentNode]) {
+      checkedNode = mangoSellers[currentNode];
+      break;
+    }
+
+    graph[currentNode].forEach(node => {
+      queue.push(node);
+    })
+  }
+
+  return checkedNode || breadthFirst(currentNode, graph);
+}
+
+console.log(breadthFirstB("you", graph));
