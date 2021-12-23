@@ -74,6 +74,23 @@ const findMaxnumberBinarySearch = (arr) => {
   return maxValue;
 };
 
-
-
 console.log(findMaxnumberBinarySearch(arrB))
+
+// Quicksort
+// Answer: [1,2,4,5,10,20]
+
+const arrC = [5, 20, 4, 2, 1, 1, 10];
+
+const quickStort = (arr) => {
+  const isSorted = arr.length < 2;
+  
+  if (isSorted) return arr;
+  
+  const pivot = arr[0];
+  const leftSubArrys = arr.filter((a) => a < pivot);
+  const rightSubArrays = arr.filter((b) => b > pivot);
+
+  return [...quickStort(leftSubArrys), pivot, ...quickStort(rightSubArrays)]
+}
+
+console.log(quickStort(arrC))
